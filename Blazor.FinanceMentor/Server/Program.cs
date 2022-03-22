@@ -1,3 +1,4 @@
+using Blazor.FinanceMentor.Server;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddEarningsRepository();
 
 var app = builder.Build();
 
