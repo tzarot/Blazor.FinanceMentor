@@ -1,0 +1,48 @@
+﻿@using FinanceMentor.Shared
+<div class="card">
+    <div class="card-header">
+        Add an earning
+    </div>
+    <div class="card-body">
+        <EditForm Model="@earning" OnValidSubmit="@HandleValidSubmit">
+            <div class="form-group">
+                <label for="dateInput">Date</label>
+                <InputDate class="form-control" id="dateInput" @bind-Value="earning.Date"></InputDate>
+            </div>
+            <div class="form-group">
+                <label for="dateInput">Subject</label>
+                <InputText class="form-control" id="subjectInput" @bind-Value="earning.Subject"></InputText>
+            </div>
+            <div class="form-group">
+                <label for="categoryInput">Category</label>
+                <InputSelect class="form-control" id="categoryInput" @bind-Value="earning.Category">
+                    @{
+                        foreach (var value in @Enum.GetValues(typeof(EarningCategory)))
+                        {
+                            <option value="@value">@value</option>
+                        }
+                    }
+                </InputSelect>
+            </div>
+            <div class="form-group">
+                <label for="amountInput">Amount</label>
+                <InputNumber class="form-control" id="amountInput" @bind-Value="earning.Amount"></InputNumber>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </EditForm>
+        <div>@_success</div>
+    </div>
+</div>
+
+@code {
+    private EarningModel earning = new EarningModel() {Date = DateTime.Today};
+    private string _success = "";
+
+   
+    public void HandleValidSubmit()
+    {
+        _success = "Success!";
+    }
+}
