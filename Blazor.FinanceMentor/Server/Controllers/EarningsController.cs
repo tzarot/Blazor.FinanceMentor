@@ -22,5 +22,11 @@ namespace Blazor.FinanceMentor.Server.Controllers
             return _earningRepository.GetAll()
                 .OrderBy(earning => earning.Date);
         }
+
+        [HttpPost]
+        public void Post(Earning earning)
+        {
+            _earningRepository.Add(earning);
+        }
     }
 }
