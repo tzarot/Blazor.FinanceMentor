@@ -40,9 +40,14 @@
 
 @code {
     private EarningModel earning = new EarningModel() {Date = DateTime.Today};
+    
+    // This Parameter comes from the Earnings Page
+    [Parameter]
+    public EventCallback OnSubmitCallback { get; set; }
 
     public async Task HandleValidSubmit()
     {
         await Http.PostAsJsonAsync<EarningModel>("api/Earnings", earning);
+        await OnSubmitCallback.InvokeAsync();
     }
 }

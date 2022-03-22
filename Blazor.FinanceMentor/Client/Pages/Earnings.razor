@@ -40,17 +40,28 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <EarningForm></EarningForm>
+        <EarningForm OnSubmitCallback="@Refresh"></EarningForm>
     </div>
 </div>
 <div>&nbsp;</div>
 @code {
     private Earning[] earnings;
 
-    protected async override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
     {
         earnings = await Http.GetFromJsonAsync<Earning[]>("api/Earnings");
         StateHasChanged();
+    }
+
+    // This method is passed as a parameter to EarningForm (see above. OnSubmitCallback) that is Invoked on EarningForm.Submit of data 
+    public async Task Refresh()
+    {
+        await LoadData();
     }
 
 }
