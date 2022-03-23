@@ -1,0 +1,97 @@
+﻿@page "/expenses"
+@using Blazor.FinanceMentor.Client.Components
+@using Blazor.FinanceMentor.Shared
+@using System.Globalization
+@inject HttpClient Http;
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card-header">
+            Expenses
+        </div>
+        <div class="card-body">
+            <table class="table teable-striped">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Category</th>
+                    <th>Subject</th>
+                    <th>Amount</th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (expenses == null)
+                {
+                    <tr><td><em>Loading...</em></td></tr>
+                }
+                else
+                {
+                    @foreach (var earning in expenses)
+                    {
+                        <tr>
+                            <td>@earning.Date.ToShortDateString()</td>
+                            <td>@earning.Category</td>
+                            <td>@earning.Subject</td>
+                            <td>@earning.Amount.ToString("C2", CultureInfo.CreateSpecificCulture("en-US"))</td>
+                            <td><button type="button" class="btn btn-danger btn-sm" @onclick="() => OpenDeleteDialog(earning)">Delete</button></td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <ExpenseForm OnSubmitCallback="@Refresh"></ExpenseForm>
+    </div>
+</div>
+<div>&nbsp;</div>
+@if (DeleteDialogOpen)
+{
+    // we call the ModalDialog, passing the Parameter of OnClose delegate. This points to the OnDeleteDialogClose private method
+    <ModalDialog DialogType="ModalDialog.ModalDialogType.DeleteCancel" Title="Are you sure?" Text="Do you want to delete this entry?" OnClose="@OnDeleteDialogClose"></ModalDialog>
+}
+@code {
+    private Expense[] expenses;
+    private Expense _expenseToDelete = null;
+
+    public bool DeleteDialogOpen { get; set; } // This property determines if the ModalDialog will be shown
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        expenses = await Http.GetFromJsonAsync<Expense[]>("api/Expenses");
+        StateHasChanged();
+    }
+    
+    public async Task Refresh()
+    {
+        await LoadData();
+    }
+
+    private void OpenDeleteDialog(Expense expense)
+    {
+        _expenseToDelete = expense;
+        DeleteDialogOpen = true;
+    }
+
+    private async Task OnDeleteDialogClose(bool accepted)
+    {
+        if (accepted)
+        {
+            await Http.DeleteAsync($"api/Expenses/{_expenseToDelete.Id}");
+            await LoadData();
+            _expenseToDelete = null;
+        }
+
+        DeleteDialogOpen = false;
+        StateHasChanged();
+    }
+
+    
+
+}
