@@ -1,8 +1,47 @@
 ﻿@page "/"
+@using System.Globalization
+@using Blazor.FinanceMentor.Client.Services
+@inject IDataService _dataService;
 
-<PageTitle>Index</PageTitle>
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card-header">
+            @currentYear - Earnings and Expenses
+        </div>
+        <div class="card-body">
+            <RadzenChart>
+                <RadzenColumnSeries Fill="#AACDBE" Data="@yearlyEarnings" CategoryProperty="Month" ValueProperty="Amount" Title="Earnings" LineType="LineType.Dashed"/>
+                <RadzenColumnSeries Fill="#EA907A" Data="@yearlyExpenses" CategoryProperty="Month" ValueProperty="Amount" Title="Expenses" LineType="LineType.Dashed"/>
+                <RadzenColumnOptions Radius="5"/>
+                <RadzenValueAxis Formatter="@FormatAsUSD">
+                    <RadzenGridLines Visible="true"/>
+                    <RadzenAxisTitle Text="Amount in USD"/>
+                </RadzenValueAxis>
+            </RadzenChart>
+                
+            
+        </div>
+    </div>
+</div>
 
-<h1>Hello, world!</h1>
+@code
+{
+    private static int currentYear = DateTime.Today.Year;
 
-Welcome to your new app.
+    private ICollection<YearlyItem> yearlyExpenses;
+    private ICollection<YearlyItem> yearlyEarnings;
 
+    string FormatAsUSD(object value)
+    {
+        return ((double) value).ToString("C0", CultureInfo.CreateSpecificCulture("en-US"));
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        yearlyEarnings = await _dataService.LoadCurrentYearEarnings();
+        yearlyExpenses = await _dataService.LoadCurrentYearExpenses();
+        
+        StateHasChanged();
+    }
+
+}
