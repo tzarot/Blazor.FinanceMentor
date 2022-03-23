@@ -28,5 +28,15 @@ namespace Blazor.FinanceMentor.Server.Controllers
         {
             _earningRepository.Add(earning);
         }
+
+        [HttpDelete("{id?}")]
+        public void Post(Guid id)
+        {
+            var entity = _earningRepository
+                .GetAll()
+                .Single(e => e.Id == id);
+            _earningRepository.Remove(entity);
+
+        }
     }
 }

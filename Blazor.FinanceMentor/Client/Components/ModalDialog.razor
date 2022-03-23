@@ -23,17 +23,20 @@
     [Parameter]
     public string Text { get; set; }
 
+    // This is the delegate to the method that will be executed when the dialog will be closed.
     [Parameter]
     public EventCallback<bool> OnClose { get; set; }
 
 
     private Task ModalCancel()
     {
+        // Here we invoke the whatever delegate was assigned to the OnClose Parameter, passing false (Cancel clicked)
         return OnClose.InvokeAsync(false);
     }
 
     private Task ModalOk()
     {
+    // Here we invoke the whatever delegate was assigned to the OnClose Parameter, passing true (Ok clicked)
         return OnClose.InvokeAsync(true);
     }
 }

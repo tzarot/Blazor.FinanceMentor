@@ -33,7 +33,7 @@
                             <td>@earning.Category</td>
                             <td>@earning.Subject</td>
                             <td>@earning.Amount.ToString("C2", CultureInfo.CreateSpecificCulture("en-US"))</td>
-                            <td><button type="button" class="btn btn-danger btn-sm" @onclick="() => OpenDeleteDialog()">Delete</button></td>
+                            <td><button type="button" class="btn btn-danger btn-sm" @onclick="() => OpenDeleteDialog(earning)">Delete</button></td>
                         </tr>
                     }
                 }
@@ -48,12 +48,14 @@
 <div>&nbsp;</div>
 @if (DeleteDialogOpen)
 {
+    // we call the ModalDialog, passing the Parameter of OnClose delegate. This points to the OnDeleteDialogClose private method
     <ModalDialog Title="Are you sure?" Text="Do you want to delete this entry?" OnClose="@OnDeleteDialogClose"></ModalDialog>
 }
 @code {
     private Earning[] earnings;
+    private Earning _earningToDelete = null;
 
-    public bool DeleteDialogOpen { get; set; }
+    public bool DeleteDialogOpen { get; set; } // This property determines if the ModalDialog will be shown
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,15 +74,25 @@
         await LoadData();
     }
 
-    private void OnDeleteDialogClose(bool accepted)
+    private void OpenDeleteDialog(Earning earning)
     {
+        _earningToDelete = earning;
+        DeleteDialogOpen = true;
+    }
+
+    private async Task OnDeleteDialogClose(bool accepted)
+    {
+        if (accepted)
+        {
+            await Http.DeleteAsync($"api/Earnings/{_earningToDelete.Id}");
+            await LoadData();
+            _earningToDelete = null;
+        }
+
         DeleteDialogOpen = false;
         StateHasChanged();
     }
 
-    private void OpenDeleteDialog()
-    {
-        DeleteDialogOpen = true;
-    }
+    
 
 }
