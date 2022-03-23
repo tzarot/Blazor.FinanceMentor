@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddEarningsRepository();
+builder.Services.AddExpensesRepository();
 
 var app = builder.Build();
 

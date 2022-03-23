@@ -23,4 +23,4 @@ namespace Blazor.FinanceMentor.Shared
 
         public decimal Amount { get; set; }
     }
-`}
+}
