@@ -9,7 +9,23 @@
                 <p>@Text</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @onclick="@ModalOk">OK</button>
+                @switch (@DialogType)
+                {
+                    case ModalDialogType.Ok:
+                        <button type="button" class="btn btn-primary" @onclick="@ModalOk">OK</button>
+                        break;
+                    case ModalDialogType.OkCancel:
+                        <button type="button" class="btn btn-primary" @onclick="@ModalOk">OK</button>
+                        <button type="button" class="btn btn-secondary" @onclick="@ModalCancel">Cancel</button>
+                        break;
+                    case ModalDialogType.DeleteCancel:
+                        <button type="button" class="btn btn-danger" @onclick="@ModalOk">Delete</button>
+                        <button type="button" class="btn btn-secondary" @onclick="@ModalCancel">Cancel</button>
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+                
             </div>
         </div>
     </div>
@@ -17,6 +33,12 @@
 
 @code
 {
+    // Remember, by using [Parameter] attribute, the property is accessible from other components,
+    // and can be passed in when calling the component
+
+    [Parameter]
+    public ModalDialogType DialogType { get; set; }
+
     [Parameter]
     public string Title { get; set; }
 
@@ -36,7 +58,15 @@
 
     private Task ModalOk()
     {
-    // Here we invoke the whatever delegate was assigned to the OnClose Parameter, passing true (Ok clicked)
+        // Here we invoke the whatever delegate was assigned to the OnClose Parameter, passing true (Ok clicked)
         return OnClose.InvokeAsync(true);
+    }
+
+
+    public enum ModalDialogType
+    {
+        Ok,
+        OkCancel,
+        DeleteCancel
     }
 }
