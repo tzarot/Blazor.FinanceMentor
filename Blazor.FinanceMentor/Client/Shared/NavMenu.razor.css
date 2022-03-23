@@ -11,6 +11,12 @@
     font-size: 1.1rem;
 }
 
+.nav-menu {
+    margin-top: 25px;
+}
+.logo {
+    width: 200px;
+}
 .oi {
     width: 2rem;
     font-size: 1.1rem;

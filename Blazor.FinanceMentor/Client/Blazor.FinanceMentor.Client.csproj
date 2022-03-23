@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Shared\Blazor.FinanceMentor.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>
