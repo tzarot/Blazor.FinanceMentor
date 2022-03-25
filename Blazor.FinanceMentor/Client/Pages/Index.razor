@@ -2,6 +2,7 @@
 @using System.Globalization
 @using Blazor.FinanceMentor.Client.Services
 @inject IDataService _dataService;
+@using Blazor.FinanceMentor.Client.Components;
 
 <div class="row">
     <div class="col-lg-8">
@@ -18,18 +19,59 @@
                     <RadzenAxisTitle Text="Amount in USD"/>
                 </RadzenValueAxis>
             </RadzenChart>
-                
-            
         </div>
     </div>
 </div>
-
+@if (earnings != null)
+{
+    <div class="row mt-4">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    Earnings - Last 3 Months
+                </div>
+                <div class="card-body">
+                    <div style="display: flex">
+                        <PieChart Colors="@colors" Data="@earnings.CurrentMonth"/>
+                        <PieChart Colors="@colors" Data="@earnings.LastMonth"/>
+                        <PieChart Colors="@colors" Data="@earnings.PreviousMonth"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (expenses != null)
+{
+    <div class="row mt-4">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    Expenses - Last 3 Months
+                </div>
+                <div class="card-body">
+                    <div style="display: flex">
+                        <PieChart Colors="@colors" Data="@expenses.CurrentMonth"/>
+                        <PieChart Colors="@colors" Data="@expenses.LastMonth"/>
+                        <PieChart Colors="@colors" Data="@expenses.PreviousMonth"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 @code
 {
+    private ICollection<string> colors = new List<string>() {"#FC687", "#F4F7C5", "#93ABD3"};
+
     private static int currentYear = DateTime.Today.Year;
 
     private ICollection<YearlyItem> yearlyExpenses;
     private ICollection<YearlyItem> yearlyEarnings;
+
+    private ThreeMonthsData earnings;
+    private ThreeMonthsData expenses;
+
 
     string FormatAsUSD(object value)
     {
@@ -38,6 +80,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        earnings = await _dataService.LoadLast3MonthsEarnings();
+        expenses = await _dataService.LoadLast3MonthsExpenses();
         yearlyEarnings = await _dataService.LoadCurrentYearEarnings();
         yearlyExpenses = await _dataService.LoadCurrentYearExpenses();
         
