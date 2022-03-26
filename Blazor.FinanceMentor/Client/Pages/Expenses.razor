@@ -5,40 +5,42 @@
 @inject HttpClient Http;
 <div class="row">
     <div class="col-lg-8">
-        <div class="card-header">
-            Expenses
-        </div>
-        <div class="card-body">
-            <table class="table teable-striped">
-                <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Category</th>
-                    <th>Subject</th>
-                    <th>Amount</th>
-                    <th>&nbsp;</th>
-                </tr>
-                </thead>
-                <tbody>
-                @if (expenses == null)
-                {
-                    <tr><td><em>Loading...</em></td></tr>
-                }
-                else
-                {
-                    @foreach (var earning in expenses)
-                    {
+        <div class="card">
+            <div class="card-header">
+                Expenses
+            </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
                         <tr>
-                            <td>@earning.Date.ToShortDateString()</td>
-                            <td>@earning.Category</td>
-                            <td>@earning.Subject</td>
-                            <td>@earning.Amount.ToString("C2", CultureInfo.CreateSpecificCulture("en-US"))</td>
-                            <td><button type="button" class="btn btn-danger btn-sm" @onclick="() => OpenDeleteDialog(earning)">Delete</button></td>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Subject</th>
+                            <th>Amount</th>
+                            <th>&nbsp;</th>
                         </tr>
-                    }
-                }
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                        @if (expenses == null)
+                        {
+                            <tr><td><em>Loading...</em></td></tr>
+                        }
+                        else
+                        {
+                            @foreach (var earning in expenses)
+                            {
+                                <tr>
+                                    <td>@earning.Date.ToShortDateString()</td>
+                                    <td>@earning.Category</td>
+                                    <td>@earning.Subject</td>
+                                    <td>@earning.Amount.ToString("C2", CultureInfo.CreateSpecificCulture("en-US"))</td>
+                                    <td><button type="button" class="btn btn-danger btn-sm" @onclick="() => OpenDeleteDialog(earning)">Delete</button></td>
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
         </div>
     </div>
     <div class="col-lg-4">

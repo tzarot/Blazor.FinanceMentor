@@ -6,19 +6,21 @@
 
 <div class="row">
     <div class="col-lg-8">
-        <div class="card-header">
-            @currentYear - Earnings and Expenses
-        </div>
-        <div class="card-body">
-            <RadzenChart>
-                <RadzenColumnSeries Fill="#AACDBE" Data="@yearlyEarnings" CategoryProperty="Month" ValueProperty="Amount" Title="Earnings" LineType="LineType.Dashed"/>
-                <RadzenColumnSeries Fill="#EA907A" Data="@yearlyExpenses" CategoryProperty="Month" ValueProperty="Amount" Title="Expenses" LineType="LineType.Dashed"/>
-                <RadzenColumnOptions Radius="5"/>
-                <RadzenValueAxis Formatter="@FormatAsUSD">
-                    <RadzenGridLines Visible="true"/>
-                    <RadzenAxisTitle Text="Amount in USD"/>
-                </RadzenValueAxis>
-            </RadzenChart>
+        <div class="card">
+            <div class="card-header">
+                @currentYear - Earnings and Expenses
+            </div>
+            <div class="card-body">
+                <RadzenChart>
+                    <RadzenColumnSeries Fill="#AACDBE" Data="@yearlyEarnings" CategoryProperty="Month" ValueProperty="Amount" Title="Earnings" LineType="LineType.Dashed"/>
+                    <RadzenColumnSeries Fill="#EA907A" Data="@yearlyExpenses" CategoryProperty="Month" ValueProperty="Amount" Title="Expenses" LineType="LineType.Dashed"/>
+                    <RadzenColumnOptions Radius="5"/>
+                    <RadzenValueAxis Formatter="@FormatAsUSD">
+                        <RadzenGridLines Visible="true"/>
+                        <RadzenAxisTitle Text="Amount in USD"/>
+                    </RadzenValueAxis>
+                </RadzenChart>
+            </div>
         </div>
     </div>
 </div>
