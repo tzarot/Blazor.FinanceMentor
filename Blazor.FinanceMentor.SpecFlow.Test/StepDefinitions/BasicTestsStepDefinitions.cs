@@ -36,6 +36,17 @@ namespace Blazor.FinanceMentor.SpecFlow.Test.StepDefinitions
             Assert.IsNotNull(navMenu);
         }
 
+        [Then(@"the navigation contains (.*) items")]
+        public void ThenTheNavigationContainsItems(int itemCount)
+        {
+            var navMenu = _driver.FindElement(By.Id("navmenufm"));
+
+            var navMenuItems = navMenu.FindElements(By.XPath("//div[contains(@class, 'nav-item')]"));
+
+            Assert.AreEqual(itemCount, navMenuItems.Count);
+        }
+
+
 
     }
 }
