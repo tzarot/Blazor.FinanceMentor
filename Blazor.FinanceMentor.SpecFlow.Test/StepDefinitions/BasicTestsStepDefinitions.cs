@@ -21,6 +21,7 @@ namespace Blazor.FinanceMentor.SpecFlow.Test.StepDefinitions
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+ 
         }
 
 
