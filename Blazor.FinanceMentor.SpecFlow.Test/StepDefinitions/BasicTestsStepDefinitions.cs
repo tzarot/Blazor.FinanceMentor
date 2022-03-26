@@ -12,7 +12,11 @@ namespace Blazor.FinanceMentor.SpecFlow.Test.StepDefinitions
         public void BeforeScenario()
         {
             var url = "https://localhost:7275/";
-            _driver = new ChromeDriver(Environment.CurrentDirectory);
+
+            var chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments("headless"); // No Chrome Visible
+
+            _driver = new ChromeDriver(Environment.CurrentDirectory, chromeOptions);
             _driver.Navigate().GoToUrl(url);
             _driver.Manage().Window.Maximize();
             _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
