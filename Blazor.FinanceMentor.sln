@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.FinanceMentor.Client
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.FinanceMentor.Shared", "Blazor.FinanceMentor\Shared\Blazor.FinanceMentor.Shared.csproj", "{D7508EB2-42D7-42E9-B2B6-67B1165ADB06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.FinanceMentor.SpecFlow.Test", "Blazor.FinanceMentor.SpecFlow.Test\Blazor.FinanceMentor.SpecFlow.Test.csproj", "{F0E3EA17-732E-4826-BB63-8A269F9ED1BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.FinanceMentor.SpecFlow.Test", "Blazor.FinanceMentor.SpecFlow.Test\Blazor.FinanceMentor.SpecFlow.Test.csproj", "{F0E3EA17-732E-4826-BB63-8A269F9ED1BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C107316C-5D87-424C-9EC8-B58C6DBEE898}"
+	ProjectSection(SolutionItems) = preProject
+		info.txt = info.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

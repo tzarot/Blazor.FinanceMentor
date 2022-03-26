@@ -1,0 +1,3 @@
+Following step by step the tutorial of Claudio Bernasconi at https://www.youtube.com/watch?v=89Klc6WHElw&t=9s
+Here I used .NET Core 6. 
+Most changes are located in SpecFlow project
