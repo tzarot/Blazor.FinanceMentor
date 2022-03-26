@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.ComTypes;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -8,11 +9,11 @@ namespace Blazor.FinanceMentor.SpecFlow.Test.StepDefinitions
     {
         private IWebDriver _driver { get; set; }
 
+        private const string url = "https://localhost:7275/";
+
         [BeforeScenario]
         public void BeforeScenario()
         {
-            var url = "https://localhost:7275/";
-
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArguments("headless"); // No Chrome Visible
 
@@ -46,6 +47,19 @@ namespace Blazor.FinanceMentor.SpecFlow.Test.StepDefinitions
             Assert.AreEqual(itemCount, navMenuItems.Count);
         }
 
+        [Given(@"The user is on the (.*) overview")]
+        public void GivenTheUserIsOnTheOverview(string route)
+        {
+            _driver.Navigate().GoToUrl($"{url}/{route}s");
+            Thread.Sleep(500);
+        }
+
+        [Then(@"the page title is (.*)")]
+        public void ThenThePageTitleIsEarnings(string pageTitle)
+        {
+            var cardHeader = _driver.FindElement(By.XPath("//div[@class='card-header']"));
+            Assert.AreEqual(pageTitle, cardHeader.Text.Trim());
+        }
 
 
     }

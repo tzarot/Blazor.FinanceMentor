@@ -9,3 +9,8 @@ Scenario: App successfully starts
 
 Scenario: NavMenu is correctly rendered
 	Then the navigation contains 3 items
+
+
+Scenario: Earnings page is correctly rendered
+	Given The user is on the earning overview
+	Then the page title is Earnings
